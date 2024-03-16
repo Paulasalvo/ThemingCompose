@@ -34,10 +34,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.namkuzo.themingcompose.R
+import com.namkuzo.themingcompose.data.Account
 
 import com.namkuzo.themingcompose.data.Email
+import com.namkuzo.themingcompose.data.LocalEmailsDataProvider
 import com.namkuzo.themingcompose.ui.components.EmailDetailAppBar
 import com.namkuzo.themingcompose.ui.components.ReplyEmailListItem
 import com.namkuzo.themingcompose.ui.components.ReplyEmailThreadItem
@@ -147,4 +150,10 @@ fun ReplyEmailDetail(
             ReplyEmailThreadItem(email = email)
         }
     }
+}
+
+@Preview
+@Composable
+fun ReplyEmailDetailPreview() {
+    ReplyEmailDetail(LocalEmailsDataProvider.allEmails.first())
 }
