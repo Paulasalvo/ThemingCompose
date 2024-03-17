@@ -16,6 +16,7 @@
 
 package com.namkuzo.themingcompose.ui
 
+import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
@@ -27,6 +28,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.namkuzo.themingcompose.data.LocalEmailsDataProvider
+import com.namkuzo.themingcompose.ui.theme.AppTheme
 
 
 class MainActivity : ComponentActivity() {
@@ -38,32 +40,38 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val uiState by viewModel.uiState.collectAsState()
-            ReplyApp(
-                replyHomeUIState = uiState,
-                closeDetailScreen = {
-                    viewModel.closeDetailScreen()
-                },
-                navigateToDetail = { emailId ->
-                    viewModel.setSelectedEmail(emailId)
-                }
-            )
+            AppTheme {
+                ReplyApp(
+                    replyHomeUIState = uiState,
+                    closeDetailScreen = {
+                        viewModel.closeDetailScreen()
+                    },
+                    navigateToDetail = { emailId ->
+                        viewModel.setSelectedEmail(emailId)
+                    }
+                )
+            }
+
         }
     }
 }
 
 @Preview(
-    uiMode = UI_MODE_NIGHT_YES,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
     name = "DefaultPreviewDark"
 )
 @Preview(
-    uiMode = UI_MODE_NIGHT_NO,
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
     name = "DefaultPreviewLight"
 )
 @Composable
 fun ReplyAppPreviewLight() {
-    ReplyApp(
-        replyHomeUIState = ReplyHomeUIState(
-            emails = LocalEmailsDataProvider.allEmails
+    AppTheme {
+        ReplyApp(
+            replyHomeUIState = ReplyHomeUIState(
+                emails = LocalEmailsDataProvider.allEmails
+            )
         )
-    )
+    }
+
 }
